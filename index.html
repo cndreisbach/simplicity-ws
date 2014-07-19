@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><script type="text/javascript">window._hoplon_main_css = 'c6f4dce0-0384-11e4-9191-0800200c9a66.css';</script><script type="text/javascript" src="c6f4dce0-0384-11e4-9191-0800200c9a66.js"></script><script type="text/javascript">tailrecursion.hoplon.app_pages._index_DOT_html.hoploninit();</script><link rel="stylesheet" type="text/css" href="c6f4dce0-0384-11e4-9191-0800200c9a66.css"><link rel="stylesheet" href="style.css"></head><body><div class="reveal"><link rel="stylesheet" href="reveal.js/css/reveal.css"><link id="theme" rel="stylesheet" href="reveal.js/css/theme/simple.css"><link rel="stylesheet" href="reveal.js/plugin/highlight/github.min.css"><div class="slides"><section><section><h2 class="slide-title chapter">Overview</h2></section><section><h3 class="slide-title slide">Agenda</h3><p><b>9:00 am</b></p><ul><li>Clojure Overview</li><li>Collections</li><li>Sequences</li><li>Modeling</li></ul><p><b>10:30 am</b></p><p>Break</p><p><b>11:00 am</b></p><ul><li>Functions</li><li>Flow Control</li><li>Polymorphism</li><li>State</li><li>Clojure Libraries</li></ul></section><section><h3 class="slide-title slide">Why Clojure?</h3><ul><li>Simple</li><li>Immutable</li><li>Robust</li></ul></section><section><h3 class="slide-title slide">Light Table Walkthrough</h3></section><section><h3 class="slide-title slide">Syntax - Literals</h3><ul><li><code>1 2.7 22/7</code></li><li><code>false true</code></li><li><code>\z</code></li><li><code>"Monopoly"</code></li><li><code>nil</code></li><li><code>board</code></li><li><code>:player1</code></li><li><code>#"[0-9+]"</code></li></ul></section><section><h3 class="slide-title slide">Calling Functions</h3><pre><code class="clojure">(println "Hello, friends!")
+(+ 1 2)
+(first (1 2 3))</code></pre></section></section><section><section><h2 class="slide-title chapter">Collections</h2></section><section><h3 class="slide-title slide">Simple Collections</h3><ul><li>Immutability</li><li>Heterogeneous</li><li>Persistent</li></ul></section><section><h3 class="slide-title slide">Collection types in Clojure</h3><ul><li>Vectors</li><li>Lists</li><li>Maps</li><li>Sets</li></ul><aside class="notes">Just 4 main collection types cover all of your needs.</aside></section><section><h3 class="slide-title slide">Vectors</h3><ul><li>Expandable, indexed list</li><li>Fast insert and indexed lookup operations</li><li>Syntax:</li></ul><pre><code class="clojure">[1 2 3 4 5 6 7 8 9 10] 
+[]</code></pre><aside class="notes">AKA arrays.</aside></section><section><h3 class="slide-title slide">Vectors</h3><pre><code class="two-cols clojure">(vector? [3 6 9])
+;=&gt; true
+
+(associative? [3 6 9])
+;=&gt; true
+
+(sequential? [3 6 9])
+;=&gt; true
+
+(vector 3 6 9)
+;=&gt; [3 6 9]
+
+(conj [3 6] 9)
+;=&gt; [3 6 9]
+
+(count [3 6 9])
+;=&gt; 3
+
+(nth [3 6 9] 1)
+;=&gt; 6 
+
+(first [3 6 9])
+;=&gt; 3</code></pre><aside class="notes">Conj does not change the vector - it is immutable.Predicate functions (asscociative? etc) will start to look familiar</aside></section><section><h3 class="slide-title slide">Lists</h3><ul><li>Linked list</li><li>Fast insert and remove (at end) operations</li><li>Syntax:</li></ul><pre><code class="clojure">(1 2 3 4 5 6 7 8 9 10) 
+()</code></pre><aside class="notes">Linked list literals are not typical, so you probably don't have one in your languageLisp does, though.Vectors much more commonly used in Clojure, unlike in Lisps where list is one of the basic building blocks.</aside></section><section><h3 class="slide-title slide">Lists</h3><pre><code class="two-cols clojure">(list? (list 1 2 3))
+;=&gt; true
+
+(sequential? (list 1 2 3))
+;=&gt; true
+
+(associative? (list 1 2 3))
+;=&gt; false
+
+(list 1 2 3)
+;=&gt; (1 2 3)
+
+(cons 3 (list 1 2))
+;=&gt; (3 1 2)
+
+(conj (list 1 2) 3)
+;=&gt; (3 1 2)
+
+(count (list 1 2 3))
+;=&gt; 3
+
+(first (list 1 2 3))
+;=&gt; 1
+
+(rest (list 1 2 3))
+;=&gt; (2 3)</code></pre><aside class="notes">Compare conj to conj with vectors.Note repeating predictate functions.</aside></section><section><h3 class="slide-title slide">Maps</h3><ul><li>Associative key-value map</li><li>Fast insert and find operations</li><li>Syntax:</li></ul><pre><code class="clojure">{:first-name "Eleanor"
+ :last-name "Peacock"}
+{}</code></pre><aside class="notes">AKA hashes, dictionaries, associative arrays.Useful to have keywords as keys, although not necessary.</aside></section><section><h3 class="slide-title slide">Maps</h3><pre><code class="clojure">(map? {:first "Eleanor" :last "Peacock"})
+;=&gt; true
+
+(get {:first "Eleanor" :last "Peacock"} :first)
+;=&gt; "Eleanor"
+
+(get {:first "Eleanor"} :last :MISS)
+;=&gt; :MISS
+
+(assoc {:first "Eleanor"} :last "Peacock")
+;=&gt; {:first "Eleanor", :last "Peacock"}
+
+(dissoc {:first "Eleanor" :last "Peacock"} :last)
+;=&gt; {:first "Eleanor"}
+
+(merge {:first "Eleanor"} {:last "Peacock"})
+;=&gt; {:first "Eleanor", :last "Peacock"}
+
+(count {:first "Eleanor" :last "Peacock"})
+;=&gt; 2
+
+(keys {:first "Eleanor" :last "Peacock"})
+;=&gt; (:first :last)
+
+(vals {:first "Eleanor" :last "Peacock"})
+;=&gt; ("Eleanor" "Peacock")</code></pre><aside class="notes">Note the predicate functions.</aside></section><section><h3 class="slide-title slide">Maps</h3><pre><code class="clojure">(:a {:a 1})
+;=&gt; 1
+(:b {:a 1})
+;=&gt; nil
+(:b {:a 1} :MISS)
+;=&gt; :MISS</code></pre><aside class="notes">Keywords are good as map keys because you can use them as a function with a map argument to access the value.</aside></section><section><h3 class="slide-title slide">Sets</h3><ul><li>No duplicates</li><li>Fast insert and contains operations</li><li>Syntax:</li></ul><pre><code class="clojure">#{"Library" "Billiard Room" "Conservatory"}
+#{}</code></pre></section><section><h3 class="slide-title slide">Sets</h3><pre><code class="two-cols clojure">(set? #{1 2})
+;=&gt; true
+
+(sequential? #{1 2}) 
+;=&gt; false 
+
+(associative?#{1 2}) 
+;=&gt; false
+
+(set [1 2 3])
+;=&gt; #{1 2 3}
+
+(conj #{1 2} 3)
+;=&gt; #{1 2 3}
+
+(count #{1 2 3})
+;=&gt; 3
+
+(disj #{1 2 3} 3) 
+;=&gt; #{1 2} 
+
+(contains?#{1 2} 1) 
+;=&gt; true
+
+(:a #{:a :b})
+;=&gt; :a</code></pre><aside class="notes">Again, note the familiar predicate functions.</aside></section><section><h3 class="slide-title slide">Who killed Mr. Boddy?</h3><p>Choose and create the proper collection of suspects from the Clue board game. Then use nth to determine who goes third.</p><p>Bonus: Invite the third player to play by their first name.</p></section><section><h3 class="slide-title slide">Sequences</h3><ul><li>A logical list abstraction</li><li>Applies to all collections</li><li>Immutable</li><li>Often lazy</li><li><code>first, rest</code></li><li><code>seq</code></li></ul><aside class="notes">Remember those functions that were called on each collection?Those are from an abstraction called sequence, or seq in Clojure.The sequence abstraction provides a common interface to all of the collection types.</aside></section></section><section><section><h2 class="slide-title chapter">Sequences</h2></section><section><h3 class="slide-title slide">Simple Sequences</h3><ul><li>Logical list abstraction</li><li>Applies to all collections</li><li><code>first, rest</code> - first and rest of the logical list</li><li><code>seq</code> - either a sequence with values, or nil</li><li>Can be lazy</li></ul><aside class="notes">Remember in the collections how we saw a number of the same functions on each collection? That is because we have a sequence (or seq) abstraction that gives an interface to  all of the collection types and other types of sequences (e.g. strings).</aside></section><section><h3 class="slide-title slide">first and rest</h3><center><table><tr><th colspan="1" rowspan="1">list</th><th colspan="1" rowspan="1">first</th><th colspan="1" rowspan="1">rest</th></tr><tr><td colspan="1" rowspan="1"><code>(1 2 3)</code></td><td colspan="1" rowspan="1"><code>1</code></td><td colspan="1" rowspan="1"><code>(2 3)</code></td></tr><tr><td colspan="1" rowspan="1"><code>(2 3)</code></td><td colspan="1" rowspan="1"><code>2</code></td><td colspan="1" rowspan="1"><code>(3)</code></td></tr><tr><td colspan="1" rowspan="1"><code>(3)</code></td><td colspan="1" rowspan="1"><code>3</code></td><td colspan="1" rowspan="1"><code>()</code></td></tr><tr><td colspan="1" rowspan="1"><code>()</code></td><td colspan="1" rowspan="1"><code>nil</code></td><td colspan="1" rowspan="1"><code>()</code></td></tr></table></center><aside class="notes">Two operations in lists: first and rest. If you know of Lisp, this will look familiar to you. You can also apply these to vectors, maps, and sets.</aside></section><section><h3 class="slide-title slide">first and rest for all seqs</h3><center><table><tr><th colspan="1" rowspan="1">seq</th><th colspan="1" rowspan="1">first</th><th colspan="1" rowspan="1">rest (seq, not list)</th></tr><tr><td colspan="1" rowspan="1"><code>(1 2 3)</code></td><td colspan="1" rowspan="1"><code>1</code></td><td colspan="1" rowspan="1"><code>(2 3)</code></td></tr><tr><td colspan="1" rowspan="1"><code>[1 2 3]</code></td><td colspan="1" rowspan="1"><code>1</code></td><td colspan="1" rowspan="1"><code>(2 3)</code></td></tr><tr><td colspan="1" rowspan="1"><code>{:a 1 :b 2 :c 3}</code></td><td colspan="1" rowspan="1"><code>[:a 1]</code></td><td colspan="1" rowspan="1"><code>([:c 3] [:b 2])</code></td></tr><tr><td colspan="1" rowspan="1"><code>#{3 1 2}</code></td><td colspan="1" rowspan="1"><code>1</code></td><td colspan="1" rowspan="1"><code>(2 3)</code></td></tr></table></center></section><section><h3 class="slide-title slide">What else can be a sequence?</h3><ul><li>Collections</li><li>Strings</li><li>Arrays</li><li>file-seq</li><li>line-seq</li><li>resultset-seq</li><li>xml-seq</li><li>tree-seq</li><li>re-seq</li><li>iterator-seq</li><li>enumeration-seq</li><li>... or whatever you want to make a seq</li></ul><aside class="notes">Then you can use the SAME function over them.</aside></section><section><h3 class="slide-title slide">Sequence Functions</h3><ul><li><b>Create seq:</b> seq, vals, keys, rseq, subseq, rsubseq, lazy-seq, repeatedly, iterate, repeat, range, keep, keep-indexed</li><li><b>Content tests:</b> seq?, distinct?, every?, not-every?, not-any?, empty?, not-empty, some</li><li><b>Get shorter:</b> distinct, filter, remove, take-nth, for</li><li><b>Get longer:</b> cons, conj, concat, lazy-cat, mapcat, cycle, interleave, interpose</li><li><b>Pull out members:</b> first, ffirst, nfirst, second, nth, when-first, last, rand-nth</li><li><b>Get changed:</b> conj, concat, distinct, flatten, group- by, partition, partition-all, partition-by, split- at, split-with, filter, remove, replace, shuffle</li></ul></section><section><h3 class="slide-title slide">More Sequence Functions</h3><ul><li><b>Head-items:</b> take, take-while, butlast, drop-last</li><li><b>Tail-items:</b> rest, nthrest, next, fnext, nnext, drop, drop-while, take-last, nthnext</li><li><b>Rearrange:</b> reverse, sort, sort-by, compare</li><li><b>Process items:</b> map, pmap, map-indexed, mapcat, for, replace, seque</li><li><b>Construct collection:</b> zipmap, into, reduce, reductions, set, vec, into-array, to-array-2d, frequencies</li><li><b>Force evaluation:</b> doseq, dorun, doall, realized?</li></ul></section><section><h3 class="slide-title slide">Sequences: Code + Data</h3><h2>All of those sequences can be used with all of those functions!!</h2></section><section><h3 class="slide-title slide">Lazy sequences</h3><p>Sequences in Clojure are lazy, which delays evaluation until necessary.</p><pre><code class="clojure">(def integers (range))
+(take 10 integers)
+; =&gt; (0 1 2 3 4 5 6 7 8 9)
+
+(def gregory-leibniz
+  (map first
+       (iterate
+        (fn [[pi div]]
+          [(if (= 1 (mod div 4))
+             (+ pi (/ 4 div))
+             (- pi (/ 4 div)))
+           (+ div 2)]) [0.0 1])))
+(first (drop 100 gregory-leibniz))
+; =&gt; ???</code></pre></section><section><h3 class="slide-title slide">What do we have for game night?</h3><p>Your friends have brought over a bunch of games for game night. They are in three collections. Find out what the distinct games they have brought are, with no overlap.</p><ul><li><code>("Clue" "Monopoly" "Catan")</code></li><li><code>["Catan" "7 Wonders" "Pandemic" "Risk"]</code></li><li><code>#{"7 Wonders" "Robot Turtles" "Clue"}</code></li></ul><p>Bonus: Make a function that can take a collection of collections of games and return the distinct games in the collection.</p></section></section><section><section><h2 class="slide-title chapter">Modeling Data</h2></section><section><h3 class="slide-title slide">Modeling Board Games</h3><aside class="notes">Let's model some well-known board games. We won't use classes and objects. Instead we'll use collections.</aside></section><section><h3 class="slide-title slide">Clue</h3><pre><code class="clojure">{:name "Clue"
+ :min-num-players   3
+ :max-num-players   6
+ :min-age           8
+ :subdomain         "Family Games"
+ :categories        ["Bluffing" "Deduction" "Murder/Mystery"]
+}</code></pre><aside class="notes">Map with keywords and values.
+http://boardgamegeek.com/</aside></section><section><h3 class="slide-title slide">Monopoly</h3><pre><code class="clojure">{:name "Monopoly"
+ :min-num-players   2
+ :max-num-players   8 
+ :min-age           8
+ :subdomain         "Family Games"
+ :categories        ["Economic" "Negotiation"]
+}</code></pre></section><section><h3 class="slide-title slide">Candy Land</h3><pre><code class="clojure">{:name "Candy Land"
+ :min-num-players   2 
+ :max-num-players   4 
+ :min-age           3 
+ :subdomain         "Children's Games"
+ :categories        ["Children's Game" "Racing"]
+}</code></pre></section><section><h3 class="slide-title slide">Settlers of Catan</h3><pre><code class="clojure">{:name "The Settlers of Catan"
+ :min-num-players   3 
+ :max-num-players   4 
+ :min-age           10 
+ :subdomain         "Strategy Games"
+ :categories        ["Civilization" "Negotiation"]
+}</code></pre></section><section><h3 class="slide-title slide">Diplomacy</h3><pre><code class="clojure">{:name "Diplomacy"
+ :min-num-players   2 
+ :max-num-players   7 
+ :min-age           12 
+ :subdomain         "Strategy Games"
+ :categories        ["Bluffing" "Negotiation" "Political" "Post-Napoleonic"]
+}</code></pre></section><section><h3 class="slide-title slide">Board Games</h3><pre><code class="clojure">(def clue {:name "Clue" ...})
+(def monopoly {:name "Monopoly" ...})
+;; etc
+
+(def board-games #{clue monopoly candy-land apples-to-apples
+                   settlers-of-catan dominion netrunner risk})
+ 
+;; and, oh, so many more</code></pre><aside class="notes">Use a set to hold the board games. Why? What about ordering?
+;; comment</aside></section><section><h3 class="slide-title slide">Board Game Modeling</h3><p>Create a model for your favorite board game.</p><p>Define vars for each game and add to the board-games set.</p><p>Bonus: Model a game player.</p></section><section><h3 class="slide-title slide">Where is my object?</h3><pre><code class="clojure">(def dorian 
+  {:first           "Dorian"
+   :last            "Hayes"
+   :age             12
+   :fav-categories  ["Fantasy" "Humor"]
+   :type            "Player"})</code></pre><aside class="notes">Just add :type</aside></section><section><h3 class="slide-title slide">Who else likes games?</h3><pre><code class="clojure">(def brian
+ {:first        "Brian"
+  :last         "Hunt"
+  :age          40
+  :type         "DungeonMaster"
+ } 
+
+(def keith
+ {:first        "Keith"
+  :last         "Hayes"
+  :age          42
+  :type         "Host"
+  }</code></pre></section><section><h3 class="slide-title slide">Access</h3><pre><code class="clojure">(get brian :age)
+(:age brian)
+
+(def people (dorian brian keith))
+(map :age people)
+
+(keys people)
+(vals people)</code></pre><aside class="notes">Can get or use keyword as function to access fields. In object-oriented world, need interfaces for that.</aside></section><section><h3 class="slide-title slide">Records</h3><pre><code class="clojure">(defrecord Player [first last age])
+
+(def dorian 
+  (-&gt; Player "Dorian" "Hayes" 12))
+
+(class dorian)
+;=&gt; user.Player</code></pre></section></section><section><section><h2 class="slide-title chapter">Functions</h2></section><section><h3 class="slide-title slide">Simple Functions</h3><pre><code class="clojure">(println "Hello, friends!")
+(+ 1 2)
+(first (1 2 3))</code></pre></section><section><h3 class="slide-title slide">Assignment with let</h3><pre><code class="clojure">(let [x 4]
+  (* x 3))
+;;=&gt; 12
+
+(let [x 1
+      y 2]
+  (println x " + " y " = " (+ x y)))</code></pre></section><section><h3 class="slide-title slide">Define with defn</h3><pre><code class="clojure">(def triple 
+  (fn 
+    [x]
+    (* x 3)))
+
+(defn triple
+  [x]
+  (* x 3))</code></pre></section><section><h3 class="slide-title slide">Family Game Night</h3><p>Write a function that takes a board game (using the maps we previously used) and the age of your youngest player and lets you know if that game can be played by your family.</p></section><section><h3 class="slide-title slide">Higher order functions - map</h3><pre><code class="clojure">(map inc (range 1 10))    
+;;=&gt; (2 3 4 5 6 7 8 9 10)</code></pre></section><section><h3 class="slide-title slide">Higher order functions - reduce</h3><pre><code class="clojure">(reduce + (range 1 10))
+;;=&gt; 45</code></pre></section><section><h3 class="slide-title slide">Higher order functions - implementing max with reduce</h3><pre><code class="clojure">(defn my-max
+  [coll]
+  (reduce (fn [current proposed]
+            (if (&gt; proposed current)
+              proposed
+              current)) coll))</code></pre></section><section><h3 class="slide-title slide">Higher order functions - filter and function literals</h3><pre><code class="clojure">(def game-pieces
+  [{:color "red" :type "die" :sides 6}
+   {:color "blue" :type "meeple"}
+   {:color "white" :type "die" :sides 8}])
+
+(def dice (filter #(= (:type %) "die") game-pieces))
+;=&gt; ({:color "red", :type "die", :sides 6}
+;    {:color "white", :type "die", :sides 8})</code></pre></section><section><h3 class="slide-title slide">Family Game Night Redux</h3><p>Write a function that takes two collections: your set of board games and the ages of all people playing. Find all games that your group can play, considering both ages and the total number of people.</p></section><section><h3 class="slide-title slide">Functional programming</h3><ul><li>Functions as primary units of computation</li><li>Avoiding state</li><li>Preferring immutability</li><li>Repeatable functions lacking side effects - <i>idempotent under sequential composition</i></li></ul></section><section><h3 class="slide-title slide">Side effects</h3><p>A side effect is any change in state or interaction that happens with the outside world during the evaluation of a function.</p><ul><li>updating a global variable</li><li>input and output</li></ul></section><section><h3 class="slide-title slide">How to deal with side effects</h3><ul><li>Put them at the edges of your code</li><li>Eliminate them from the majority of your functions</li><li>Use features like atoms and refs, which allow state to be updated through applying pure functions</li><li>Remember that most sequences are lazy!</li></ul></section><section><h3 class="slide-title slide">Side effect in a map fn</h3><pre><code class="clojure">(def squares (map (fn [x] (println x) (* x x)) (range 1 100)))
+(first squares)
+;; ...prints out 1 through 32...
+;=&gt; 1</code></pre></section></section><section><section><h2 class="slide-title chapter">Flow Control</h2></section><section><h3 class="slide-title slide">Truthiness</h3><pre><code class="clojure">(true? true)
+;=&gt; true
+
+(false? false)
+;=&gt; true
+
+(nil? nil)
+;=&gt; true
+
+(true? 3)
+;=&gt; false
+
+(false? nil)
+;=&gt; false
+
+(true? (= 1 1))
+;=&gt; true</code></pre><aside class="notes">Everything is true unless it's nil or false</aside></section><section><h3 class="slide-title slide">cond</h3><pre><code class="clojure">(let [min-age 12]
+  (cond
+    (&gt;= min-age 18) "Adult game"
+    (&gt;= min-age 8) "Family game"
+    (&gt;= min-age 3) "Children's game"
+    :else "Toy, not a game"))
+;=&gt; "Family game"</code></pre></section><section><h3 class="slide-title slide">if</h3><pre><code class="clojure">(if (&gt; 3 1)
+    "3 is greater than 1"
+    "3 is not greater than 1")
+;=&gt; "3 is greater than 1"</code></pre></section><section><h3 class="slide-title slide">loop</h3><pre><code class="clojure">(loop [x 21]
+  (when (&gt; x 1)
+    (println x)
+    (recur (- x 3))))</code></pre></section><section><h3 class="slide-title slide">doseq</h3><pre><code class="clojure">(doseq [x [1 2 3]
+        y [1 2 3]]
+  (println (* x y)))</code></pre><aside class="notes">For side effects</aside></section></section><section><section><h2 class="slide-title chapter">Polymorphism</h2></section><section><h3 class="slide-title slide">Using Control Flow</h3></section><section><h3 class="slide-title slide">Monopoly locations</h3><pre><code class="clojure">(def park-place {:name "Park Place" :base-rent 35 :type :property :color-count 2})
+(def electric-company {:name "Electric Company" :type :utility})
+(def short-line {:name "Short Line" :type :railroad})</code></pre></section><section><h3 class="slide-title slide">Calculating Monopoly rent</h3><pre><code class="clojure">(defn roll-dice []
+  (+ 2 (rand-int 6) (rand-int 6)))
+
+(defn calculate-rent
+  ([location num-like-locations]
+     (calculate-rent location num-like-locations (roll-dice)))
+  ([location num-like-locations die-roll]
+     (let [type (:type location)]
+       (cond
+        (= type :property)
+        (if (= (inc num-like-locations) (:color-count location))
+          (* (:base-rent location) 2)
+          (:base-rent location))
+
+        (= type :utility)
+        (if (zero? num-like-locations)
+          (* 4 die-roll)
+          (* 10 die-roll))
+
+        (= type :railroad)
+        (* 25 (Math/pow 2 num-like-locations))))))</code></pre></section><section><h3 class="slide-title slide">Using multimethods</h3><pre><code class="clojure">(defmulti calculate-rent
+  (fn [location &amp; _]) (:type location))
+
+(defmethod calculate-rent :property
+  [location num-like-locations _]
+  (if (= (inc num-like-locations) (:color-count location))
+    (* base-rent 2)
+    base-rent))
+
+(defmethod calculate-rent :utility
+  [_ num-like-locations die-roll]
+  (if (zero? num-like-locations)
+    (* 4 die-roll)
+    (* 10 die-roll)))
+
+(defmethod calculate-rent :railroad
+  [_ num-like-locations _]
+  (* 25 (Math/pow 2 num-like-locations)))
+
+(defmethod calculate-rent :default
+  [&amp; _]
+  0)</code></pre></section><section><h3 class="slide-title slide">Protocols and records</h3><ul><li>Records are associative, like maps</li><li>They actually create Java classes</li><li>Protocols are similar to interfaces</li><li>And create Java interfaces</li><li>But can be applied to any current or future type</li></ul></section><section><h3 class="slide-title slide">Rentable protocol</h3><pre><code class="clojure">(defprotocol Rentable
+  (calculate-rent [this num-like-locations] [this num-like-locations die-roll]
+    "Calculates the rent on this location.")
+  (readable-rent [this]))</code></pre></section><section><h3 class="slide-title slide">Property</h3><pre><code class="clojure">(defrecord Property [name base-rent num-in-group]
+  Rentable
+  (calculate-rent [_ num-like-locations]
+    (if (= (inc num-like-locations) num-in-group)
+      (* base-rent 2)
+      base-rent))
+  (calculate-rent [property num-like-locations _]
+    (calculate-rent property num-like-locations))
+  (readable-rent [_]
+    (str "$" base-rent ", $" (* 2 base-rent) " if monopoly")))</code></pre></section><section><h3 class="slide-title slide">Utility</h3><pre><code class="clojure">(defrecord Utility [name]
+  Rentable
+  (calculate-rent [utility num-like-locations]
+    (calculate-rent utility num-like-locations (+ (rand-int 6) (rand-int 6) 2)))
+  (calculate-rent [_ num-like-locations die-roll]
+    (if (zero? num-like-locations)
+      (* 4 die-roll)
+      (* 10 die-roll)))
+  (readable-rent [_]
+    (str "$4 * dice roll, $10 * dice roll if you own both")))</code></pre></section><section><h3 class="slide-title slide">Railroad</h3><pre><code class="clojure">(defrecord Railroad [name]
+  Rentable
+  (calculate-rent [_ num-like-locations]
+    (* 25
+       (Math/pow 2 num-like-locations)))
+  (calculate-rent [railroad num-like-locations _]
+    (calculate-rent railroad num-like-locations))
+  (readable-rent [_]
+    (str "$25 if you own 1, $50 if 2, $100 if 3, $200 if 4")))</code></pre></section><section><h3 class="slide-title slide">Some locations</h3><pre><code class="clojure">(def park-place (-&gt;Property "Park Place" 35 2))
+(def electric-company (-&gt;Utility "Electric Company"))
+(def short-line (-&gt;Railroad "Short Line"))
+
+(calculate-rent electric-company 0 7)
+;=&gt; 28
+
+(readable-rent park-place)
+;=&gt; "$35, $70 if monopoly"</code></pre></section><section><h3 class="slide-title slide">Chess pieces</h3><p>Make a protocol Piece that has two methods: <code>possible-moves</code> and <code>can-move</code>?</p><p>Then make records for Kings and Knights and implement the Piece protocol.</p><p>Kings and Knights should know their current location.</p><p>Chess locations are on a board with one axis being a-h and the other being 1-8.</p></section></section><section><section><h2 class="slide-title chapter">State</h2></section><section><h3 class="slide-title slide">Simplifying State</h3><ul><li>There is state in Clojure.</li><li>It is just managed in a sane way</li></ul></section><section><h3 class="slide-title slide">Clojure Reference Types</h3><ul><li>Refs - coordinated, synchronous</li><li>Atoms - uncoordinated, synchronous</li><li>Agents - asynchronous</li><li>Vars - named and interned in a namespace</li></ul></section><section><h3 class="slide-title slide">Monopoly Refs</h3><pre><code class="clojure">(def bank (ref 0))
+(def bank-props (ref #{"Baltic" "Park Place" "Boardwalk"}))
+(def player (ref [{:money 1500
+                   :props #{}}]))
+@bank
+;=&gt; 0
+@bank-props
+;=&gt; #{"Baltic" "Boardwalk" "Park Place"}
+@player
+;=&gt; [{:money 1500, :props #{}}]
+ 
+(defn buy-property
+  [prop-name cost player-num]
+  (dosync 
+    (alter bank + cost)
+    (alter player update-in [player-num :money] - cost)
+    (alter bank-props disj prop-name)
+    (alter player update-in [player-num :props] conj prop-name)))
+
+(buy-property "Baltic" 200 0)
+
+@bank
+;=&gt; 200
+@bank-props
+;=&gt; #{"Boardwalk" "Park Place"}
+@player
+;=&gt; [{:money 1300, :props #{"Baltic"}}]</code></pre></section><section><h3 class="slide-title slide">Atoms of Catan</h3><pre><code class="clojure">(def player1 (atom {:brick 0 :lumber 1 :wool 1 :grain 0 :ore 0}))
+(def player2 (atom {:brick 1 :lumber 0 :wool 1 :grain 0 :ore 0}))
+(def player3 (atom {:brick 1 :lumber 0 :wool 0 :grain 2 :ore 0}))
+
+(swap! player1 update-in [:lumber] inc)
+(swap! player2 update-in [:grain] + 2)
+(swap! player3 update-in [:grain] inc)
+
+@player1
+;=&gt; {:brick 0, :lumber 2, :wool 1, :grain 0, :ore 0}
+@player2
+;=&gt; {:brick 1, :lumber 0, :wool 1, :grain 2, :ore 0}
+@player3
+;=&gt; {:brick 1, :lumber 0, :wool 0, :grain 3, :ore 0}</code></pre></section><section><h3 class="slide-title slide">Diplomacy Agents</h3><pre><code class="clojure">(def p1 (agent []))
+(def p2 (agent []))
+
+@p1
+;=&gt; []
+@p2
+;=&gt; []
+
+(send p1 conj [:A "Hol-Bel"] [:A "Kie-Hol"] [:A "Smy-Arm"] [:A "Bud-Ser"] 
+      [:A "Tun-Wes"] [:F "Nap-Tys"] [:F "Por-Spa"])
+(send p2 conj [:F "Nwy-StP"] [:F "Nth-Nwy"] [:A "Edi-Nth"] [:A "Ruh-Bur"] 
+      [:A "Bul-Rum"] [:A "Con-Bul"] [:F "Tri-Bud"] [:A "Wes-Mid"] [:F "TyS-Lyo"])
+
+@p1
+;=&gt; [[:A "Hol-Bel"] [:A "Kie-Hol"] [:A "Smy-Arm"] [:A "Bud-Ser"] 
+;=&gt; [:A "Tun-Wes"] [:F "Nap-Tys"] [:F "Por-Spa"]]
+@p2
+;=&gt; [[:F "Nwy-StP"] [:F "Nth-Nwy"] [:A "Edi-Nth"] [:A "Ruh-Bur"] 
+;=&gt; [:A "Bul-Rum"] [:A "Con-Bul"] [:F "Tri-Bud"] [:A "Wes-Mid"] [:F "TyS-Lyo"]]</code></pre></section><section><h3 class="slide-title slide">Board Game Vars</h3><pre><code class="clojure">(ns games)
+
+(def clue { ... })
+;=&gt; #'games/clue
+
+(def monopoly { ... })
+;=&gt; #'games/monopoly
+
+(def board-games #{ ... })
+;=&gt; #'games/board-games
+
+(defn suggest-game [games min-age] ... )
+;=&gt; #'games/suggest-game</code></pre></section><section><h3 class="slide-title slide">Shall we play a game?</h3><p>Demonstrate the gameplay of Go Fish using the Clojure ref reference type.</p><p>BONUS: Implement the gameplay of your favorite game using the appropriate Clojure reference type.</p></section></section><section><section><h2 class="slide-title chapter">Simple Examples</h2></section><section><h3 class="slide-title slide">core.matrix</h3><ul><li>Want logic programming?  <b>core.logic</b></li><li>Want CSP?  <b>core.async</b></li><li>Want numerical computing?  <b>core.matrix</b></li><li>Source Code: <a shape="rect" href="https://github.com/mikera/core.matrix/blob/develop/src/main/clojure/clojure/core/matrix.clj">https://github.com/mikera/core.matrix</a></li><li>Clojure/conj 2013 talk: <a shape="rect" href="https://www.youtube.com/watch?v=_h9TLJtjSJo">https://www.youtube.com/watch?v=_h9TLJtjSJo</a></li></ul></section><section><h3 class="slide-title slide">http-kit</h3><ul><li>Source Code: <a shape="rect" href="https://github.com/http-kit/http-kit/blob/master/src/org/httpkit/client.clj#L118">https://github.com/http-kit</a></li></ul></section></section><section><section><h2 class="slide-title chapter">Extras</h2></section><section><h3 class="slide-title slide">Concurrency</h3><ul><li>Futures</li><li>Promises</li></ul></section><section><h3 class="slide-title slide">Program Organization - Leiningen</h3><ul><li>Automates Clojure projects. Like Make for Clojure.</li><li>Common commands<ul><li>lein new app my-app</li><li>lein repl</li><li>lein test</li><li>lein run</li><li>lein uberjar</li></ul></li></ul></section><section><h3 class="slide-title slide">Program Organization - Namespaces</h3><ul><li><code>ns</code> creates namespace and loads, aliases what you need</li><li>At top of file</li><li>Refers all of <code>clojure.core</code></li><li>Imports all of <code>java.lang</code></li></ul><pre><code class="clojure">(ns foo.bar.baz-quuz)</code></pre></section><section><h3 class="slide-title slide">Program Organization - Namespaces</h3><pre><code class="clojure">(ns my-ns
+  (:require clojure.set))
+
+(clojure.set/union #{1 2} #{2 3 4}) 
+;;=&gt; #{1 2 3 4}
+
+(ns my-ns
+  (:require clojure.set :as set))
+
+(set/union #{1 2} #{2 3 4}) 
+;;=&gt; #{1 2 3 4}</code></pre></section><section><h3 class="slide-title slide">Thank you for attending!</h3><p>Clinton Dreisbach @cndreisbach</p><p>Bridget Hillyer @BridgetHillyer</p></section><section><h3 class="slide-title slide">References</h3><ul><li>Rich Hickey - Simple Made Easy: <a shape="rect" href="http://www.infoq.com/presentations/Simple-Made-Easy">http://www.infoq.com/presentations/Simple-Made-Easy</a></li><li>Stuart Halloway - Simplicity Ain't Easy: <a shape="rect" href="https://www.youtube.com/watch?v=cidchWg74Y4">https://www.youtube.com/watch?v=cidchWg74Y4</a></li><li>Alex Miller @puredanger - Thanks for inspiration from CodeMash "Thinking in Data" talk</li><li>Board game info from: <a shape="rect" href="http://boardgamegeek.com/">http://boardgamegeek.com/</a></li></ul></section></section></div></div></body></html>
