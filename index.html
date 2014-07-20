@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html><head><meta charset="utf-8"><script type="text/javascript">window._hoplon_main_css = 'c6f4dce0-0384-11e4-9191-0800200c9a66.css';</script><script type="text/javascript" src="c6f4dce0-0384-11e4-9191-0800200c9a66.js"></script><script type="text/javascript">tailrecursion.hoplon.app_pages._index_DOT_html.hoploninit();</script><link rel="stylesheet" type="text/css" href="c6f4dce0-0384-11e4-9191-0800200c9a66.css"><link rel="stylesheet" href="style.css"></head><body><div class="reveal"><link rel="stylesheet" href="reveal.js/css/reveal.css"><link id="theme" rel="stylesheet" href="reveal.js/css/theme/simple.css"><link rel="stylesheet" href="reveal.js/plugin/highlight/github.min.css"><div class="slides"><section><section><h2 class="slide-title chapter">Overview</h2></section><section><h3 class="slide-title slide">Agenda</h3><p><b>9:00 am</b></p><ul><li>Clojure Overview</li><li>Collections</li><li>Sequences</li><li>Modeling</li></ul><p><b>10:30 am</b></p><p>Break</p><p><b>11:00 am</b></p><ul><li>Functions</li><li>Flow Control</li><li>Polymorphism</li><li>State</li><li>Clojure Libraries</li></ul></section><section><h3 class="slide-title slide">Why Clojure?</h3><ul><li>Simple</li><li>Immutable</li><li>Robust</li></ul></section><section><h3 class="slide-title slide">Light Table Walkthrough</h3></section><section><h3 class="slide-title slide">Syntax - Literals</h3><ul><li><code>1 2.7 22/7</code></li><li><code>false true</code></li><li><code>\z</code></li><li><code>"Monopoly"</code></li><li><code>nil</code></li><li><code>board</code></li><li><code>:player1</code></li><li><code>#"[0-9+]"</code></li></ul></section><section><h3 class="slide-title slide">Calling Functions</h3><pre><code class="clojure">(println "Hello, friends!")
+<html><head><meta charset="utf-8"><script type="text/javascript">window._hoplon_main_css = 'c6f4dce0-0384-11e4-9191-0800200c9a66.css';</script><script type="text/javascript" src="c6f4dce0-0384-11e4-9191-0800200c9a66.js"></script><script type="text/javascript">tailrecursion.hoplon.app_pages._index_DOT_html.hoploninit();</script><link rel="stylesheet" type="text/css" href="c6f4dce0-0384-11e4-9191-0800200c9a66.css"><link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,700,900,700italic,900italic,400italic"><link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Inconsolata:400,700"><link rel="stylesheet" href="style.css"></head><body><div class="reveal"><link rel="stylesheet" href="reveal.js/css/reveal.css"><link id="theme" rel="stylesheet" href="reveal.js/css/theme/simple.css"><link rel="stylesheet" href="reveal.js/plugin/highlight/github.min.css"><div class="slides"><section data-state="title-slide"><h1 class="slide-title intro">The Simplicity of Clojure</h1><div>Bridget Hillyer</div><div>Clinton N. Dreisbach</div><div>OSCON 2014</div></section><section><section><h2 class="slide-title chapter">Overview</h2></section><section><h3 class="slide-title slide">Agenda</h3><p><b>9:00 am</b></p><ul><li>Clojure Overview</li><li>Collections</li><li>Sequences</li><li>Modeling</li></ul><p><b>10:30 am</b></p><p>Break</p><p><b>11:00 am</b></p><ul><li>Functions</li><li>Flow Control</li><li>Polymorphism</li><li>State</li><li>Clojure Libraries</li></ul></section><section><h3 class="slide-title slide">Why Clojure?</h3><ul><li>Simple</li><li>Immutable</li><li>Robust</li></ul></section><section><h3 class="slide-title slide">Light Table Walkthrough</h3></section><section><h3 class="slide-title slide">Syntax - Literals</h3><ul><li><code>1 2.7 22/7</code></li><li><code>false true</code></li><li><code>\z</code></li><li><code>"Monopoly"</code></li><li><code>nil</code></li><li><code>board</code></li><li><code>:player1</code></li><li><code>#"[0-9+]"</code></li></ul></section><section><h3 class="slide-title slide">Calling Functions</h3><pre><code class="clojure">(println "Hello, friends!")
 (+ 1 2)
 (first (1 2 3))</code></pre></section></section><section><section><h2 class="slide-title chapter">Collections</h2></section><section><h3 class="slide-title slide">Simple Collections</h3><ul><li>Immutability</li><li>Heterogeneous</li><li>Persistent</li></ul></section><section><h3 class="slide-title slide">Collection types in Clojure</h3><ul><li>Vectors</li><li>Lists</li><li>Maps</li><li>Sets</li></ul><aside class="notes">Just 4 main collection types cover all of your needs.</aside></section><section><h3 class="slide-title slide">Vectors</h3><ul><li>Expandable, indexed list</li><li>Fast insert and indexed lookup operations</li><li>Syntax:</li></ul><pre><code class="clojure">[1 2 3 4 5 6 7 8 9 10] 
 []</code></pre><aside class="notes">AKA arrays.</aside></section><section><h3 class="slide-title slide">Vectors</h3><pre><code class="two-cols clojure">(vector? [3 6 9])
@@ -77,7 +77,13 @@
 ;=&gt; (:first :last)
 
 (vals {:first "Eleanor" :last "Peacock"})
-;=&gt; ("Eleanor" "Peacock")</code></pre><aside class="notes">Note the predicate functions.</aside></section><section><h3 class="slide-title slide">Maps</h3><pre><code class="clojure">(:a {:a 1})
+;=&gt; ("Eleanor" "Peacock")
+
+(associative? {:first "Eleanor" :last "Peacock"})
+;=&gt; true
+
+(sequential? {:first "Eleanor" :last "Peacock"})
+;=&gt; false</code></pre><aside class="notes">Note the predicate functions.</aside></section><section><h3 class="slide-title slide">Maps</h3><pre><code class="clojure">(:a {:a 1})
 ;=&gt; 1
 (:b {:a 1})
 ;=&gt; nil
@@ -170,17 +176,17 @@ http://boardgamegeek.com/</aside></section><section><h3 class="slide-title slide
   :last         "Hunt"
   :age          40
   :type         "DungeonMaster"
- } 
+ })
 
 (def keith
  {:first        "Keith"
   :last         "Hayes"
   :age          42
   :type         "Host"
-  }</code></pre></section><section><h3 class="slide-title slide">Access</h3><pre><code class="clojure">(get brian :age)
+  })</code></pre></section><section><h3 class="slide-title slide">Access</h3><pre><code class="clojure">(get brian :age)
 (:age brian)
 
-(def people (dorian brian keith))
+(def people '(dorian brian keith))
 (map :age people)
 
 (keys people)
@@ -252,7 +258,8 @@ http://boardgamegeek.com/</aside></section><section><h3 class="slide-title slide
     (println x)
     (recur (- x 3))))</code></pre></section><section><h3 class="slide-title slide">doseq</h3><pre><code class="clojure">(doseq [x [1 2 3]
         y [1 2 3]]
-  (println (* x y)))</code></pre><aside class="notes">For side effects</aside></section></section><section><section><h2 class="slide-title chapter">Polymorphism</h2></section><section><h3 class="slide-title slide">Using Control Flow</h3></section><section><h3 class="slide-title slide">Monopoly locations</h3><pre><code class="clojure">(def park-place {:name "Park Place" :base-rent 35 :type :property :color-count 2})
+  (println (* x y)))</code></pre><aside class="notes">For side effects</aside></section></section><section><section><h2 class="slide-title chapter">Polymorphism</h2></section><section><h3 class="slide-title slide">Using Control Flow</h3></section><section><h3 class="slide-title slide">Monopoly locations</h3><pre><code class="clojure">(def park-place {:name "Park Place" :base-rent 35
+                 :type :property :color-count 2})
 (def electric-company {:name "Electric Company" :type :utility})
 (def short-line {:name "Short Line" :type :railroad})</code></pre></section><section><h3 class="slide-title slide">Calculating Monopoly rent</h3><pre><code class="clojure">(defn roll-dice []
   (+ 2 (rand-int 6) (rand-int 6)))
@@ -401,7 +408,7 @@ http://boardgamegeek.com/</aside></section><section><h3 class="slide-title slide
 ;=&gt; #'games/board-games
 
 (defn suggest-game [games min-age] ... )
-;=&gt; #'games/suggest-game</code></pre></section><section><h3 class="slide-title slide">Shall we play a game?</h3><p>Demonstrate the gameplay of Go Fish using the Clojure ref reference type.</p><p>BONUS: Implement the gameplay of your favorite game using the appropriate Clojure reference type.</p></section></section><section><section><h2 class="slide-title chapter">Simple Examples</h2></section><section><h3 class="slide-title slide">core.matrix</h3><ul><li>Want logic programming?  <b>core.logic</b></li><li>Want CSP?  <b>core.async</b></li><li>Want numerical computing?  <b>core.matrix</b></li><li>Source Code: <a shape="rect" href="https://github.com/mikera/core.matrix/blob/develop/src/main/clojure/clojure/core/matrix.clj">https://github.com/mikera/core.matrix</a></li><li>Clojure/conj 2013 talk: <a shape="rect" href="https://www.youtube.com/watch?v=_h9TLJtjSJo">https://www.youtube.com/watch?v=_h9TLJtjSJo</a></li></ul></section><section><h3 class="slide-title slide">http-kit</h3><ul><li>Source Code: <a shape="rect" href="https://github.com/http-kit/http-kit/blob/master/src/org/httpkit/client.clj#L118">https://github.com/http-kit</a></li></ul></section></section><section><section><h2 class="slide-title chapter">Extras</h2></section><section><h3 class="slide-title slide">Concurrency</h3><ul><li>Futures</li><li>Promises</li></ul></section><section><h3 class="slide-title slide">Program Organization - Leiningen</h3><ul><li>Automates Clojure projects. Like Make for Clojure.</li><li>Common commands<ul><li>lein new app my-app</li><li>lein repl</li><li>lein test</li><li>lein run</li><li>lein uberjar</li></ul></li></ul></section><section><h3 class="slide-title slide">Program Organization - Namespaces</h3><ul><li><code>ns</code> creates namespace and loads, aliases what you need</li><li>At top of file</li><li>Refers all of <code>clojure.core</code></li><li>Imports all of <code>java.lang</code></li></ul><pre><code class="clojure">(ns foo.bar.baz-quuz)</code></pre></section><section><h3 class="slide-title slide">Program Organization - Namespaces</h3><pre><code class="clojure">(ns my-ns
+;=&gt; #'games/suggest-game</code></pre></section><section><h3 class="slide-title slide">Shall we play a game?</h3><p>Demonstrate the gameplay of Go Fish using the Clojure ref reference type.</p><p>BONUS: Implement the gameplay of your favorite game using the appropriate Clojure reference type.</p></section></section><section><section><h2 class="slide-title chapter">Simple Examples</h2></section><section><h3 class="slide-title slide">core.matrix</h3><ul><li>Want logic programming?  <b>core.logic</b></li><li>Want CSP?  <b>core.async</b></li><li>Want numerical computing?  <b>core.matrix</b></li><li>Source Code: <a shape="rect" href="https://github.com/mikera/core.matrix/blob/develop/src/main/clojure/clojure/core/matrix.clj">https://github.com/mikera/core.matrix</a></li><li>Clojure/conj 2013 talk: <a shape="rect" href="https://www.youtube.com/watch?v=_h9TLJtjSJo">https://www.youtube.com/watch?v=_h9TLJtjSJo</a></li></ul></section><section><h3 class="slide-title slide">Javelin &amp; Hoplon</h3><ul><li>Reactive programming in Clojure</li><li>Treat your data like a spreadsheet</li><li>Web data binding</li><li>Source Code: <a shape="rect" href="https://github.com/tailrecursion/javelin">github.com/tailrecursion/javelin</a></li><li>More info: <a shape="rect" href="https://hoplon.io">hoplon.io</a></li></ul></section></section><section><section><h2 class="slide-title chapter">Extras</h2></section><section><h3 class="slide-title slide">Concurrency</h3><ul><li>Futures</li><li>Promises</li></ul></section><section><h3 class="slide-title slide">Program Organization - Leiningen</h3><ul><li>Automates Clojure projects. Like Make for Clojure.</li><li>Common commands<ul><li>lein new app my-app</li><li>lein repl</li><li>lein test</li><li>lein run</li><li>lein uberjar</li></ul></li></ul></section><section><h3 class="slide-title slide">Program Organization - Namespaces</h3><ul><li><code>ns</code> creates namespace and loads, aliases what you need</li><li>At top of file</li><li>Refers all of <code>clojure.core</code></li><li>Imports all of <code>java.lang</code></li></ul><pre><code class="clojure">(ns foo.bar.baz-quuz)</code></pre></section><section><h3 class="slide-title slide">Program Organization - Namespaces</h3><pre><code class="clojure">(ns my-ns
   (:require clojure.set))
 
 (clojure.set/union #{1 2} #{2 3 4}) 
